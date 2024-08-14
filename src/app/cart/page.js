@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React from 'react'
+import React,{useState} from 'react'
 import Head from 'next/head'
 import { FaMinusCircle,FaPlusCircle } from 'react-icons/fa'
 import { useCart } from 'react-use-cart'
@@ -9,7 +9,27 @@ import { toast } from 'react-hot-toast'
 
 function Cart() {
   const {updateItemQuantity,items,cartTotal}=useCart()
+  const [coupon, setCoupon] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [error, setError] = useState('');
 
+  const handleApplyCoupon = () => {
+    let discountAmount = 0;
+    setError('');  // Reset error message
+
+    if (coupon === 'DISCOUNT10') {
+      discountAmount = 0.10;
+    } else if (coupon === 'DISCOUNT20') {
+      discountAmount = 0.20;
+    } else {
+      setError('Invalid coupon code.');
+      return;
+    }
+
+    setDiscount(discountAmount);
+  };
+
+  const finalTotal = (cartTotal * (1 - discount)).toFixed(2);
   
   return (
     <div>
@@ -71,22 +91,38 @@ function Cart() {
       </div>
       {/* Summary Section */}
       <div className='col-md-4 col-12'>
-        <div className='card shadow-sm border-0 rounded-3'>
-          <div className='card-body'>
-            <h6 className='text-center mb-3'>Order Summary</h6>
-            <div className='d-flex justify-content-between mb-2'>
-              <span>Delivery</span> <span>$0.00</span>
-            </div>
-            <div className='d-flex justify-content-between mb-2'>
-              <span>Discount</span> <span>$0.00</span>
-            </div>
-            <div className='d-flex justify-content-between fw-bold'>
-              <span>Total</span> <span>${cartTotal.toFixed(2)}</span>
-            </div>
-            <button className='btn btn-primary btn-block mt-4'>Proceed to Checkout</button>
+      <div className='card shadow-sm border-0 rounded-3'>
+        <div className='card-body'>
+          <h6 className='text-center mb-3'>Order Summary</h6>
+          <div className='d-flex justify-content-between mb-2'>
+            <span>Delivery</span> <span>$0.00</span>
           </div>
+          <div className='d-flex justify-content-between mb-2'>
+            <span>Discount</span> <span>${(cartTotal * discount).toFixed(2)}</span>
+          </div>
+          <div className='d-flex justify-content-between fw-bold'>
+            <span>Total</span> <span>${finalTotal}</span>
+          </div>
+          <div className='mt-3'>
+            <input 
+              type='text' 
+              className='form-control mb-2' 
+              placeholder='Enter coupon code' 
+              value={coupon} 
+              onChange={(e) => setCoupon(e.target.value)} 
+            />
+            {error && <div className='text-danger mb-2'>{error}</div>}
+            <button 
+              className='btn btn-primary btn-block' 
+              onClick={handleApplyCoupon}
+            >
+              Apply Coupon
+            </button>
+          </div>
+          <button className='btn btn-primary btn-block mt-4'>Proceed to Checkout</button>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </div>
