@@ -15,7 +15,7 @@ function Cart() {
 
   const handleApplyCoupon = () => {
     let discountAmount = 0;
-    setError('');  // Reset error message
+    setError('');  
 
     if (coupon === 'DISCOUNT10') {
       discountAmount = 0.10;
