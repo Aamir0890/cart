@@ -4,10 +4,10 @@ import React from 'react'
 import Head from 'next/head'
 import { FaMinusCircle,FaPlusCircle } from 'react-icons/fa'
 import { useCart } from 'react-use-cart'
-import { ToastBar,toast } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 
 
-function cart() {
+function Cart() {
   const {updateItemQuantity,items,cartTotal}=useCart()
 
   
@@ -94,4 +94,4 @@ function cart() {
   )
 }
 
-export default cart
+export default Cart
