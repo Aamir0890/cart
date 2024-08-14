@@ -8,9 +8,12 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-sm bg-body-tertiary navbar-light bg-light">
   <div className="container">
-    <a className="navbar-brand" href="#">
+    <Link  href="/" legacyBehavior>
+   
+    <a className="navbar-brand">
         Shopping Cart
         </a>
+        </Link>
     <button 
     className="navbar-toggler" 
     type="button" 
