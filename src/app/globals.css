@@ -31,3 +31,10 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Remove the height unset to maintain consistency */
+.custom-image {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
